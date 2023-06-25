@@ -1,0 +1,41 @@
+import pytest
+from snake_model import Snake, Food
+
+def test_snake_move():
+    snake = Snake(10, 10, 5)
+    snake.move()
+    assert snake.segments == [(15, 10)]
+    
+def test_snake_grow():
+    snake = Snake(10, 10, 5)
+    snake.grow()
+    assert snake.segments == [(10, 10), (5, 10)]
+    
+def test_snake_check_collision_wall():
+    snake = Snake(0, 0, 5)
+    assert snake.check_collision(800, 600) == True
+    
+def test_snake_check_collision_self():
+    snake = Snake(10, 10, 5)
+    snake.move()
+    snake.move()
+    snake.move()
+    snake.move()
+    snake.move()
+    assert snake.check_collision(800, 600) == True
+    
+def test_food_place():
+    food = Food(800, 600, 10)
+    food.place()
+    assert food.position != None
+    
+def test_game_update_score():
+    game = Game(800, 600, 10, 5, 10, 10, 20, 100, "Arial")
+    game.score = 0
+    game.update_score()
+    assert game.score == 1
+    
+def test_game_end():
+    game = Game(800, 600, 10, 5, 10, 10, 20, 100, "Arial")
+    game.end()
+    assert game.running == False
